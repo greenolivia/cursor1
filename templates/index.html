@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="results-section">
+    <h2>DASS-21 Depression Anxiety Stress Scales</h2>
+    <p>The DASS-21 is a set of three self-report scales designed to measure the emotional states of depression, anxiety and stress.</p>
+    
+    <h3>Instructions</h3>
+    <p>Please read each statement and select a number 0, 1, 2 or 3 which indicates how much the statement applied to you over the past week.</p>
+    <ul style="margin: 15px 0 15px 30px;">
+        <li><strong>0:</strong> Did not apply to me at all</li>
+        <li><strong>1:</strong> Applied to me to some degree, or some of the time</li>
+        <li><strong>2:</strong> Applied to me to a considerable degree, or a good part of time</li>
+        <li><strong>3:</strong> Applied to me very much, or most of the time</li>
+    </ul>
+    
+    <p>To begin the screening, please register or login.</p>
+    
+    <div style="margin-top: 20px;">
+        <a href="{{ url_for('register') }}">
+            <button>Register for Screening</button>
+        </a>
+        <a href="{{ url_for('login') }}">
+            <button>Login</button>
+        </a>
+    </div>
+</div>
+
+<div class="results-section">
+    <h3>Important Notice</h3>
+    <p><strong>This screening tool is for educational and research purposes only and should not be used as a substitute for professional medical advice, diagnosis, or treatment.</strong></p>
+    <p>If you are experiencing thoughts of self-harm or suicide, please seek immediate professional help or contact a crisis helpline.</p>
+</div>
+{% endblock %}

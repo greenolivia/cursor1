@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}DASS-21 Screening - DASS-21 Screening Tool{% endblock %}
+
+{% block content %}
+<div class="results-section">
+    <h2>DASS-21 Screening Questionnaire</h2>
+    <p>Please read each statement and select how much it applied to you <strong>over the past week</strong>.</p>
+    <p><strong>0 = Did not apply to me at all</strong> | <strong>1 = Applied to me to some degree</strong> | <strong>2 = Applied to me to a considerable degree</strong> | <strong>3 = Applied to me very much</strong></p>
+</div>
+
+<form method="POST">
+    {% for question in questions %}
+    <div class="question">
+        <div class="question-text">
+            <strong>{{ question.id }}.</strong> {{ question.text }}
+        </div>
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="radio" id="q{{ question.id }}_0" name="q{{ question.id }}" value="0" required>
+                <label for="q{{ question.id }}_0">0</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="q{{ question.id }}_1" name="q{{ question.id }}" value="1">
+                <label for="q{{ question.id }}_1">1</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="q{{ question.id }}_2" name="q{{ question.id }}" value="2">
+                <label for="q{{ question.id }}_2">2</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="q{{ question.id }}_3" name="q{{ question.id }}" value="3">
+                <label for="q{{ question.id }}_3">3</label>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+    <div class="results-section">
+        <input type="submit" value="Submit Screening">
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Panel - DASS-21 Screening Tool{% endblock %}
+
+{% block content %}
+<div class="results-section">
+    <h2>Admin Dashboard</h2>
+    <p>Manage users and view screening responses</p>
+</div>
+
+<div class="results-section">
+    <h3>Registered Users ({{ users|length }})</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Registration Date</th>
+            <th>Screenings Completed</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+            <td>{{ user.screening_responses|length }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="results-section">
+    <h3>All Screening Responses ({{ responses|length }})</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Completed</th>
+            <th>Depression</th>
+            <th>Anxiety</th>
+            <th>Stress</th>
+            <th>Actions</th>
+        </tr>
+        {% for response in responses %}
+        <tr>
+            <td>{{ response.id }}</td>
+            <td>{{ response.user.username }}</td>
+            <td>{{ response.completed_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ response.depression_score }}</td>
+            <td>{{ response.anxiety_score }}</td>
+            <td>{{ response.stress_score }}</td>
+            <td>
+                <a href="{{ url_for('results', response_id=response.id) }}">
+                    <button style="padding: 5px 10px; font-size: 12px;">View</button>
+                </a>
+                <a href="{{ url_for('generate_pdf', response_id=response.id) }}">
+                    <button style="padding: 5px 10px; font-size: 12px;">PDF</button>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="results-section">
+    <h3>Summary Statistics</h3>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        <div style="text-align: center;">
+            <h4>Average Depression Score</h4>
+            <p style="font-size: 24px; font-weight: bold;">
+                {% if responses %}
+                    {{ "%.1f"|format(responses|sum(attribute='depression_score') / responses|length) }}
+                {% else %}
+                    0.0
+                {% endif %}
+            </p>
+        </div>
+        <div style="text-align: center;">
+            <h4>Average Anxiety Score</h4>
+            <p style="font-size: 24px; font-weight: bold;">
+                {% if responses %}
+                    {{ "%.1f"|format(responses|sum(attribute='anxiety_score') / responses|length) }}
+                {% else %}
+                    0.0
+                {% endif %}
+            </p>
+        </div>
+        <div style="text-align: center;">
+            <h4>Average Stress Score</h4>
+            <p style="font-size: 24px; font-weight: bold;">
+                {% if responses %}
+                    {{ "%.1f"|format(responses|sum(attribute='stress_score') / responses|length) }}
+                {% else %}
+                    0.0
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
